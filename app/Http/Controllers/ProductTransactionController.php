@@ -42,7 +42,10 @@ class ProductTransactionController extends Controller
      */
     public function show(ProductTransaction $productTransaction)
     {
-        return view('admin.product_transactions.details');
+        $productTransaction = ProductTransaction::with('transactionDetails.product.category')->find($productTransaction->id);
+        return view('admin.product_transactions.details', [
+            'productTransaction' => $productTransaction
+        ]);
     }
 
     /**

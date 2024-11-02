@@ -17,7 +17,7 @@
                                 Total Transaksi
                              </p >
                              <h3 class="text-xl font-bold text-indigo-950">
-                                 18.000.000
+                                 {{$productTransaction->total_amout}}
                              </h3>
                          </div>
                     </div>
@@ -26,14 +26,23 @@
                            Date
                          </p >
                          <h3 class="text-xl font-bold text-indigo-950">
-                             25 January 2024
+                             {{$productTransaction->created_at}}
                          </h3>
                      </div>
-                     <span class="py-1 px-3 rounded-full bg-orange-500">
-                        <p class="text-white font-bold text-sm">
-                            PENDING
-                        </p>
-                     </span>
+                     @if ($productTransaction->is_paid)
+                        <span class="py-1 px-3 rounded-full bg-green-500">
+                            <p class="text-white font-bold text-sm">
+                                SUCCESS
+                            </p>
+                        </span>
+                     @else
+                        <span class="py-1 px-3 rounded-full bg-orange-500">
+                            <p class="text-white font-bold text-sm">
+                                PENDING
+                            </p>
+                        </span>
+                     @endif
+
                  </div>
                  <hr class="my-3">
                  <h3 class="text-xl font-bold text-indigo-950">
@@ -42,87 +51,26 @@
 
                  <div class="grid-cols-4 grid gap-x-10">
                     <div class="flex flex-col gap-y-5 col-span-2">
+                        @forelse ($productTransaction->transactionDetails as $detail)
                         <div class="item-card flex flex-row justify-between items-center">
                             <div class="flex flex-row items-center gap-x-3">
-                                <img src="#" alt="" class="w-[50px] h-[50px]">
+                                <img src="{{Storage::url($detail->product->photo)}}" alt="" class="w-[50px] h-[50px]">
                                 <div>
                                     <h3 class="text-xl font-bold text-indigo-950">
-                                        Name
+                                        {{$detail->product->name}}
                                     </h3>
                                     <p class="text-base text-slate-500">
-                                        Price
+                                        {{$detail->price}}
                                     </p >
                                 </div>
                             </div>
                             <p class="text-base text-slate-500">
-                                Category
+                                {{$detail->product->category->name}}
                             </p>
                         </div>
-                        <div class="item-card flex flex-row justify-between items-center">
-                            <div class="flex flex-row items-center gap-x-3">
-                                <img src="#" alt="" class="w-[50px] h-[50px]">
-                                <div>
-                                    <h3 class="text-xl font-bold text-indigo-950">
-                                        Name
-                                    </h3>
-                                    <p class="text-base text-slate-500">
-                                        Price
-                                    </p >
-                                </div>
-                            </div>
-                            <p class="text-base text-slate-500">
-                                Category
-                            </p>
-                        </div>
-                        <div class="item-card flex flex-row justify-between items-center">
-                            <div class="flex flex-row items-center gap-x-3">
-                                <img src="#" alt="" class="w-[50px] h-[50px]">
-                                <div>
-                                    <h3 class="text-xl font-bold text-indigo-950">
-                                        Name
-                                    </h3>
-                                    <p class="text-base text-slate-500">
-                                        Price
-                                    </p >
-                                </div>
-                            </div>
-                            <p class="text-base text-slate-500">
-                                Category
-                            </p>
-                        </div>
-                        <div class="item-card flex flex-row justify-between items-center">
-                            <div class="flex flex-row items-center gap-x-3">
-                                <img src="#" alt="" class="w-[50px] h-[50px]">
-                                <div>
-                                    <h3 class="text-xl font-bold text-indigo-950">
-                                        Name
-                                    </h3>
-                                    <p class="text-base text-slate-500">
-                                        Price
-                                    </p >
-                                </div>
-                            </div>
-                            <p class="text-base text-slate-500">
-                                Category
-                            </p>
-                        </div>
-                        <div class="item-card flex flex-row justify-between items-center">
-                            <div class="flex flex-row items-center gap-x-3">
-                                <img src="#" alt="" class="w-[50px] h-[50px]">
-                                <div>
-                                    <h3 class="text-xl font-bold text-indigo-950">
-                                        Name
-                                    </h3>
-                                    <p class="text-base text-slate-500">
-                                        Price
-                                    </p >
-                                </div>
-                            </div>
-                            <p class="text-base text-slate-500">
-                                Category
-                            </p>
-                        </div>
-
+                        @empty
+                        <p>Tidak ada data produk.</p>
+                        @endforelse
                         <h3 class="text-xl font-bold text-indigo-950">
                             Detail of Delivery
                          </h3>
@@ -131,7 +79,7 @@
                                 Address
                             </p>
                             <h3 class="text-lg font-bold text-indigo-950">
-                                Orchard No. 23
+                                {{$productTransaction->address}}
                             </h3>
                         </div>
                          <div class="item-card flex flex-row justify-between items-center">
@@ -139,7 +87,7 @@
                                 City
                             </p>
                             <h3 class="text-lg font-bold text-indigo-950">
-                                Singapore
+                                {{$productTransaction->city}}
                             </h3>
                         </div>
                          <div class="item-card flex flex-row justify-between items-center">
@@ -147,7 +95,7 @@
                                 Post Code
                             </p>
                             <h3 class="text-lg font-bold text-indigo-950">
-                                123123123123
+                                {{$productTransaction->post_code}}
                             </h3>
                         </div>
                          <div class="item-card flex flex-row justify-between items-center">
@@ -155,7 +103,7 @@
                                 Phone Number
                             </p>
                             <h3 class="text-lg font-bold text-indigo-950">
-                                60123123123
+                                {{$productTransaction->phone_number}}
                             </h3>
                         </div>
                          <div class="item-card flex flex-col justify-between items-start">
@@ -163,7 +111,7 @@
                                 Notes
                             </p>
                             <h3 class="text-lg font-bold text-indigo-950">
-                                Sebelah cafe local dekat dengan river of orchard
+                                {{$productTransaction->notes}}
                             </h3>
                         </div>
 
@@ -172,7 +120,7 @@
                         <h3 class="text-xl font-bold text-indigo-950">
                             Proof of Payment:
                          </h3>
-                        <img src="" alt="" class="w-[300px] bg-red-300 h-[400px]"/>
+                        <img src="{{Storage::url($productTransaction->proof)}}" alt="{{$productTransaction->proof}}" class="w-[300px]  h-[400px]"/>
                     </div>
                  </div>
 
