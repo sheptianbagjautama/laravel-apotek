@@ -10,7 +10,7 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10">
 
                 @if ($errors->any())
-                    @foreach ($collection as $error)
+                    @foreach ($errors as $error)
                         <div class="py-3 w-full rounded-3xl bg-red-500 text-white">
                             {{$error}}
                         </div>

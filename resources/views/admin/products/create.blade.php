@@ -10,14 +10,14 @@
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-10">
 
                 @if ($errors->any())
-                    @foreach ($collection as $error)
+                    @foreach ($errors as $error)
                         <div class="py-3 w-full rounded-3xl bg-red-500 text-white">
                             {{$error}}
                         </div>
                     @endforeach
                 @endif
 
-                <form method="POST" action="{{ route('admin.categories.store') }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('admin.products.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <!-- Name -->
@@ -37,7 +37,7 @@
                      <!-- Price -->
                      <div class="mt-4">
                         <x-input-label for="price" :value="__('Price')" />
-                        <x-text-input id="price" class="block mt-1 w-full" type="number" price="price" :value="old('price')" required autofocus autocomplete="price" />
+                        <x-text-input id="price" class="block mt-1 w-full" type="number" name="price" :value="old('price')" required autofocus autocomplete="price" />
                         <x-input-error :messages="$errors->get('price')" class="mt-2" />
                     </div>
 
@@ -52,7 +52,7 @@
 
                             @endforelse
                         </select>
-                        <x-input-error :messages="$errors->get('price')" class="mt-2" />
+                        <x-input-error :messages="$errors->get('category_id')" class="mt-2" />
                     </div>
 
                       <!-- Price -->
