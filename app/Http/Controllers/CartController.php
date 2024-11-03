@@ -96,6 +96,15 @@ class CartController extends Controller
      */
     public function destroy(Cart $cart)
     {
-        //
+        try {
+            $cart->delete();
+            return redirect()->back();
+        } catch (\Exception $e) {
+            $error = ValidationException::withMessages([
+                'system_error' => ['Sytem error!' . $e->getMessage()],
+            ]);
+
+            throw $error;
+        }
     }
 }
