@@ -49,7 +49,7 @@ class User extends Authenticatable
 
     public function carts()
     {
-        $this->hasMany(Cart::class);
+        return $this->hasMany(Cart::class);
     }
 
     public function product_transactions()
