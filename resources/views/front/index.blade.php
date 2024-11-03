@@ -85,7 +85,8 @@
 			</p>
 			<form action="" method="POST" id="searchForm" class="w-full">
 				<input type="text" name="search" id="searchProduct"
-					class="block w-full py-3.5 pl-4 pr-10 rounded-[50px] font-semibold placeholder:text-grey placeholder:font-normal text-black text-base bg-no-repeat bg-[calc(100%-16px)] bg-[url('{{asset('/assets/svgs/ic-search.svg')}}')] focus:ring-2 focus:ring-primary focus:outline-none focus:border-none transition-all"
+                style="background-image: url('{{asset('/assets/svgs/ic-search.svg')}}')"
+					class="block w-full py-3.5 pl-4 pr-10 rounded-[50px] font-semibold placeholder:text-grey placeholder:font-normal text-black text-base bg-no-repeat bg-[calc(100%-16px)] focus:ring-2 focus:ring-primary focus:outline-none focus:border-none transition-all"
 					placeholder="Search by product name">
 			</form>
 		</section>
@@ -93,7 +94,8 @@
 		<!-- Your last order -->
 		<section class="wrapper">
 			<div
-				class="flex justify-between gap-5 items-center bg-lilac py-3.5 px-4 rounded-2xl relative bg-left bg-no-repeat bg-cover bg-[url('{{asset('/assets/svgs/pipeline.svg')}}')]">
+            style="background-image: url('{{asset('/assets/svgs/pipeline.svg')}}')"
+				class="flex justify-between gap-5 items-center bg-lilac py-3.5 px-4 rounded-2xl relative bg-left bg-no-repeat bg-cover">
 				<p class="text-base font-bold">
 					Your last order has <br>
 					been proceed
@@ -145,49 +147,29 @@
 				Latest Products
 			</p>
 			<div id="proudctsSlider" class="relative">
-				<!-- Panadomal -->
-				<div class="rounded-2xl bg-white py-3.5 pl-4 pr-[22px] inline-flex flex-col gap-4 items-start mr-4 relative w-[158px]">
-					<img src="{{asset('/assets/images/product-1.webp')}}" class="h-[100px] w-full object-contain" alt="">
-					<div>
-						<a href="details.html" class="text-base font-semibold w-[120px] truncate stretched-link block">
-							Panadomal
-						</a>
-						<p class="text-sm truncate text-grey">
-							Rp 56000
-						</p>
-					</div>
-				</div>
-				<!-- Softovac Rami -->
-				<div class="rounded-2xl bg-white py-3.5 pl-4 pr-[22px] inline-flex flex-col gap-4 items-start mr-4 relative w-[158px]">
-					<img src="{{asset('/assets/images/product-4.webp')}}" class="h-[100px] w-full object-contain" alt="">
-					<div>
-						<a href="details.html" class="text-base font-semibold w-[120px] truncate stretched-link block">
-							Softovac Rami
-						</a>
-						<p class="text-sm truncate text-grey">
-							Rp 290000
-						</p>
-					</div>
-				</div>
-				<!-- Softovac Rami -->
-				<div class="rounded-2xl bg-white py-3.5 pl-4 pr-[22px] inline-flex flex-col gap-4 items-start mr-4 relative w-[158px]">
-					<img src="{{asset('/assets/images/product-2.webp')}}" class="h-[100px] w-full object-contain" alt="">
-					<div>
-						<a href="details.html" class="text-base font-semibold w-[120px] truncate stretched-link block">
-							Softovac Rami
-						</a>
-						<p class="text-sm truncate text-grey">
-							Rp 290000
-						</p>
-					</div>
-				</div>
+
+                @forelse ($products as $product)
+                    <div class="rounded-2xl bg-white py-3.5 pl-4 pr-[22px] inline-flex flex-col gap-4 items-start mr-4 relative w-[158px]">
+                        <img src="{{Storage::url($product->photo)}}" class="h-[100px] w-full object-contain" alt="">
+                        <div>
+                            <a href="{{route('front.product.details', $product->slug)}}" class="text-base font-semibold w-[120px] truncate stretched-link block">
+                                {{$product->name}}
+                            </a>
+                            <p class="text-sm truncate text-grey">
+                                Rp {{$product->price}}
+                            </p>
+                        </div>
+                    </div>
+                @empty
+                    <p>Belum ada produk baru tersedia.</p>
+                @endforelse
 			</div>
 		</section>
 
 		<!-- Explore -->
 		<section class="wrapper">
-			<div
-				class="bg-lilac py-3.5 px-5 rounded-2xl relative bg-right-bottom bg-no-repeat bg-[url('{{asset('/assets/svgs/doctor-help.svg')}}')] bg-auto">
+			<div style="background-image: url('{{asset('/assets/svgs/doctor-help.svg')}}')"
+				class="bg-lilac py-3.5 px-5 rounded-2xl relative bg-right-bottom bg-no-repeat bg-auto">
 				<img src="{{asset('/assets/svgs/cloud.svg')}}" class="-ml-1.5 mb-1.5" alt="">
 				<div class="flex flex-col gap-4 mb-[23px]">
 					<p class="text-base font-bold">

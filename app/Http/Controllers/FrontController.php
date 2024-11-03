@@ -18,6 +18,13 @@ class FrontController extends Controller
         ]);
     }
 
-    public function details() {}
+    public function details(Product $product)
+    {
+        return view('front.details', [
+            'product' => $product
+        ]);
+    }
+
+
     public function search() {}
 }
