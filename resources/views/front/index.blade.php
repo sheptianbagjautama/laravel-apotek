@@ -110,34 +110,16 @@
 				Categories
 			</p>
 			<div id="categoriesSlider" class="relative">
-				<!-- Diabetes -->
-				<div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
-					<img src="{{asset('/assets/svgs/ic-diabetes-filled.svg')}}" class="size-10" alt="">
-					<a href="#" class="text-base font-semibold truncate stretched-link">
-						Diabetes
-					</a>
-				</div>
-				<!-- Fitness -->
-				<div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
-					<img src="{{asset('/assets/svgs/ic-fitness-filled.svg')}}" class="size-10" alt="">
-					<a href="#" class="text-base font-semibold truncate stretched-link">
-						Fitness
-					</a>
-				</div>
-				<!-- Vitamins -->
-				<div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
-					<img src="{{asset('/assets/svgs/ic-vitamins-filled.svg')}}" class="size-10" alt="">
-					<a href="#" class="text-base font-semibold truncate stretched-link">
-						Vitamins
-					</a>
-				</div>
-				<!-- Surgicals -->
-				<div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
-					<img src="{{asset('/assets/svgs/ic-surgicals-filled.svg')}}" class="size-10" alt="">
-					<a href="#" class="text-base font-semibold truncate stretched-link">
-						Surgicals
-					</a>
-				</div>
+                @forelse ($categories as $category)
+                    <div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
+                        <img src="{{Storage::url($category->icon)}}" class="size-10" alt="">
+                        <a href="#" class="text-base font-semibold truncate stretched-link">
+                            {{$category->name}}
+                        </a>
+                    </div>
+                @empty
+                    Belum ada kategori.
+                @endforelse
 			</div>
 		</section>
 
