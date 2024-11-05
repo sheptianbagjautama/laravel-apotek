@@ -99,7 +99,7 @@
           </li>
           <li class="flex items-center justify-between">
             <p class="text-base font-semibold first:font-normal">
-              Delivery (Promo)
+              Delivery Fee
             </p>
             <p class="text-base font-semibold first:font-normal" id="checkout-delivery-fee">
 
@@ -109,7 +109,7 @@
             <p class="text-base font-bold first:font-normal">
               Grand Total
             </p>
-            <p class="text-base font-bold first:font-normal text-primary" id="checkout-grandtotal">
+            <p class="text-base font-bold first:font-normal text-primary" id="checkout-grand-total">
 
             </p>
           </li>
@@ -150,13 +150,13 @@
           <div class="inline-flex items-center gap-2.5">
             <img src="{{ asset('/assets/svgs/ic-bank.svg' ) }}" class="size-5" alt="">
             <p class="text-base font-semibold">
-              Send Payment to
+              Bank Parma Tian
             </p>
           </div>
           <div class="inline-flex items-center gap-2.5">
             <img src="{{ asset('/assets/svgs/ic-security-card.svg' ) }}" class="size-5" alt="">
             <p class="text-base font-semibold">
-              083902093092
+              083902093092112
             </p>
           </div>
         </div>
@@ -173,7 +173,8 @@
           <img src="{{ asset('/assets/svgs/ic-chevron.svg' ) }}" class="transition-all duration-300 -rotate-180 size-5" alt="">
         </button>
       </div>
-      <form action="" method="" class="p-6 bg-white rounded-3xl" id="deliveryForm">
+      <form action="{{ route('product_transactions.store')}}" method="POST" enctype="multipart/form-data" class="p-6 bg-white rounded-3xl" id="deliveryForm">
+        @csrf
         <div class="flex flex-col gap-5">
           <!-- Address -->
           <div class="flex flex-col gap-2.5">
@@ -189,14 +190,14 @@
           </div>
           <!-- Post Code -->
           <div class="flex flex-col gap-2.5">
-            <label for="postcode" class="text-base font-semibold">Post Code</label>
-            <input type="number" name="postcode" id="postcode__"
+            <label for="post_code" class="text-base font-semibold">Post Code</label>
+            <input type="number" name="post_code" id="post_code__"
               class="form-input bg-[url('{{ asset('/assets/svgs/ic-house.svg' ) }}')]" value="22081882">
           </div>
           <!-- Phone Number -->
           <div class="flex flex-col gap-2.5">
-            <label for="phonenumber" class="text-base font-semibold">Phone Number</label>
-            <input type="number" name="phonenumber" id="phonenumber__"
+            <label for="phone_number" class="text-base font-semibold">Phone Number</label>
+            <input type="number" name="phone_number" id="phone_number__"
               class="form-input bg-[url('{{ asset('/assets/svgs/ic-phone.svg' ) }}')]" value="602192301923">
           </div>
           <!-- Add. Notes -->
@@ -210,13 +211,13 @@
           </div>
           <!-- Proof of Payment -->
           <div class="flex flex-col gap-2.5">
-            <label for="proof_of_payment" class="text-base font-semibold">Proof of Payment</label>
-            <input type="file" name="proof_of_payment" id="proof_of_payment__"
+            <label for="proof" class="text-base font-semibold">Proof of Payment</label>
+            <input type="file" name="proof" id="proof__"
               class="form-input bg-[url('{{ asset('/assets/svgs/ic-folder-add.svg' ) }}')]">
           </div>
         </div>
         </div>
-      </form>
+
     </section>
 
     <!-- Floating grand total -->
@@ -226,7 +227,7 @@
           <p class="text-sm text-grey mb-0.5">
             Grand Total
           </p>
-          <p class="text-lg min-[350px]:text-2xl font-bold text-white">
+          <p class="text-lg min-[350px]:text-2xl font-bold text-white" id="checkout-grand-total-price">
             Rp 3.290.000
           </p>
         </div>
@@ -236,11 +237,15 @@
       </section>
     </div>
 
+  </form>
+
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
       integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="{{ asset('/scripts/global.js' ) }}"></script>
     <script>
         function calculatePrice(){
+        console.log('menjalankan calculate price');
+
             let subTotal = 0;
             let deliveryFee = 10000;
 
@@ -257,6 +262,30 @@
                 minimumFractionDigits:2,
                 maximumFractionDigits:2
             })}`;
+
+            const tax = 11 * subTotal / 100;
+            document.getElementById('checkout-ppn').textContent = `Rp ${tax.toLocaleString('id', {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })}`;
+
+            const insurance = 23 * subTotal / 100;
+            document.getElementById('checkout-insurance').textContent = `Rp ${insurance.toLocaleString('id', {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })}`;
+
+            const grandTotalPrice = subTotal + tax + insurance + deliveryFee;
+            document.getElementById('checkout-grand-total').textContent = `Rp ${grandTotalPrice.toLocaleString('id', {
+                minimumFractionDigits:2,
+                maximumFractionDigits:2
+            })}`;
+
+            document.getElementById('checkout-grand-total-price').textContent = `Rp ${grandTotalPrice.toLocaleString('id', {
+                minimumFractionDigits:0,
+                maximumFractionDigits:2
+            })}`;
+
         }
 
         document.addEventListener('DOMContentLoaded', function () {
