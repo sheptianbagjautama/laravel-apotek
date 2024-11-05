@@ -88,8 +88,8 @@
 				We Provide <br>
 				Best Medicines
 			</p>
-			<form action="" method="POST" id="searchForm" class="w-full">
-				<input type="text" name="search" id="searchProduct"
+			<form action="{{route('front.search')}}" method="GET" id="searchForm" class="w-full">
+				<input type="text" name="keyword" id="searchProduct"
                 style="background-image: url('{{asset('/assets/svgs/ic-search.svg')}}')"
 					class="block w-full py-3.5 pl-4 pr-10 rounded-[50px] font-semibold placeholder:text-grey placeholder:font-normal text-black text-base bg-no-repeat bg-[calc(100%-16px)] focus:ring-2 focus:ring-primary focus:outline-none focus:border-none transition-all"
 					placeholder="Search by product name">
@@ -118,7 +118,7 @@
                 @forelse ($categories as $category)
                     <div class="inline-flex gap-2.5 items-center py-3 px-3.5 relative bg-white rounded-xl mr-4">
                         <img src="{{Storage::url($category->icon)}}" class="size-10" alt="">
-                        <a href="#" class="text-base font-semibold truncate stretched-link">
+                        <a href="{{route('front.product.category', $category)}}" class="text-base font-semibold truncate stretched-link">
                             {{$category->name}}
                         </a>
                     </div>
@@ -253,7 +253,7 @@
 		<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
 
 		<script src="{{asset('/scripts/sliderConfig.js')}}" type="module"></script>
-		<script src="{{asset('/scripts/searchProductListener.js')}}" type="module"></script>
+		{{-- <script src="{{asset('/scripts/searchProductListener.js')}}" type="module"></script> --}}
 	</body>
 
 </html>
